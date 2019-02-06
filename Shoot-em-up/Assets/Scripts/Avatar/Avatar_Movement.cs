@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Avatar_Movement : MonoBehaviour {
 
-    public float speed;
-
     private float bound_x;
     private float bound_y;
     private const float Avatar_Size = 0.5f;
@@ -19,34 +17,26 @@ public class Avatar_Movement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        if (Input.GetKey(KeyCode.W))
+        var speed = GetComponent<Speed>();
+        if (Input.GetKey(KeyCode.W)&& transform.position.y < bound_y)
         {
-            if (transform.position.y < bound_y)
-            {
-                transform.position += speed * new Vector3(0, 1, 0) * Time.deltaTime;
-            }
+            speed.direction = new Vector3(0, 1, 0);
         }
-        else if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A)&& transform.position.x > -bound_x)
         {
-            if (transform.position.x > -bound_x)
-            {
-                transform.position -= speed * new Vector3(1, 0, 0) * Time.deltaTime;
-            }
+            speed.direction = new Vector3(-1, 0, 0);
         }
-        else if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.S)&& transform.position.y > -bound_y)
         {
-            if (transform.position.y > -bound_y)
-            {
-                transform.position -= speed * new Vector3(0, 1, 0) * Time.deltaTime;
-            }
+            speed.direction = new Vector3(0, -1, 0);
         }
-        else if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D)&& transform.position.x < bound_x)
         {
-            if (transform.position.x < bound_x)
-            {
-                transform.position += speed * new Vector3(1, 0, 0) * Time.deltaTime;
-            }
+            speed.direction = new Vector3(1, 0, 0);
+        }
+        else
+        {
+            speed.direction = new Vector3(0, 0, 0);
         }
         change_rotation();
 	}
@@ -55,7 +45,7 @@ public class Avatar_Movement : MonoBehaviour {
     {
         Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition)-transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x);
-        transform.rotation = Quaternion.AngleAxis(-90+angle * Mathf.Rad2Deg, new Vector3(0, 0, 1));
+        transform.rotation = Quaternion.AngleAxis(angle * Mathf.Rad2Deg, new Vector3(0, 0, 1));
     }
 
 }

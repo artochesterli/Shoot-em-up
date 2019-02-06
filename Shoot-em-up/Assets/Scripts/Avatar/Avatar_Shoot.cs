@@ -21,7 +21,8 @@ public class Avatar_Shoot : MonoBehaviour {
             if (bullet_interval_time_count_down <= 0)
             {
                 bullet_interval_time_count_down = bullet_interval;
-                Instantiate(Resources.Load("Prefabs/Bullet_Avatar"), transform.position + transform.up * bullet_initial_distance_to_avatar, transform.rotation);
+                GameObject bullet=(GameObject)Instantiate(Resources.Load("Prefabs/Bullet_Avatar"), transform.position + transform.right * bullet_initial_distance_to_avatar, transform.rotation);
+                bullet.GetComponent<Speed>().direction = transform.right;
             }
             else
             {
