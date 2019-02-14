@@ -22,10 +22,10 @@ public class Random_Move : MonoBehaviour
         if(Vector3.Dot(speed.direction, target.pos - transform.position) < 0)
         {
             arrived = true;
-            transform.position = target.pos;
+
         }
         
-        if (arrived||GetComponent<Check_Out_Bound>().Out_Bound())
+        if (arrived)
         {
             Set_Random_Target_Position();
         }
