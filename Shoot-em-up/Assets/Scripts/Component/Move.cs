@@ -11,4 +11,6 @@ public class Move : MonoBehaviour
         var speed = GetComponent<Speed>();
         transform.position += speed.speed_value * speed.direction * Time.deltaTime;
     }
+
+    
 }

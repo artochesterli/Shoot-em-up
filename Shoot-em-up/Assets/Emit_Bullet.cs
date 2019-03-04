@@ -27,10 +27,13 @@ public class Emit_Bullet : MonoBehaviour
             if (time_count >= Interval)
             {
                 time_count = 0;
-                GameObject bullet = (GameObject)Instantiate(Resources.Load("Prefabs/Bullet_Enemy"), transform.position, new Quaternion(0, 0, 0, 0));
-                Vector3 offset = Main.Avatar.transform.position - transform.position;
-                offset.Normalize();
-                bullet.GetComponent<Speed>().direction = offset;
+                if (Main.Avatar != null)
+                {
+                    GameObject bullet = (GameObject)Instantiate(Resources.Load("Prefabs/Bullet_Enemy"), transform.position, new Quaternion(0, 0, 0, 0));
+                    Vector3 offset = Main.Avatar.transform.position - transform.position;
+                    offset.Normalize();
+                    bullet.GetComponent<Speed>().direction = offset;
+                }
             }
             time_count += Time.deltaTime;
             yield return null;

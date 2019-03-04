@@ -10,35 +10,38 @@ public class Chase : MonoBehaviour
     void Update()
     {
         var target_object = GetComponent<Target_Object>();
-        var speed = GetComponent<Speed>();
-        float angle = GetComponent<Chase_Turn_Angle>().angle*Time.deltaTime;
-        if (speed.direction.magnitude>0)
+        if (target_object.target != null)
         {
-            Vector3 offset = target_object.target.transform.position - transform.position;
-            float angle_offset = Vector3.SignedAngle(speed.direction, offset,  new Vector3(0,0,1));
-            if (Mathf.Abs(angle_offset) >= angle)
+            var speed = GetComponent<Speed>();
+            float angle = GetComponent<Chase_Turn_Angle>().angle * Time.deltaTime;
+            if (speed.direction.magnitude > 0)
             {
-                if (angle_offset > 0)
+                Vector3 offset = target_object.target.transform.position - transform.position;
+                float angle_offset = Vector3.SignedAngle(speed.direction, offset, new Vector3(0, 0, 1));
+                if (Mathf.Abs(angle_offset) >= angle)
                 {
-                    speed.direction = Rotate_Vector(new Vector2(speed.direction.x, speed.direction.y), angle);
+                    if (angle_offset > 0)
+                    {
+                        speed.direction = Rotate_Vector(new Vector2(speed.direction.x, speed.direction.y), angle);
+                    }
+                    else
+                    {
+                        speed.direction = Rotate_Vector(new Vector2(speed.direction.x, speed.direction.y), -angle);
+                    }
                 }
                 else
                 {
-                    speed.direction = Rotate_Vector(new Vector2(speed.direction.x, speed.direction.y), -angle);
+                    Vector3 offset_v = target_object.target.transform.position - transform.position;
+                    speed.direction = offset_v;
+                    speed.direction.Normalize();
                 }
             }
             else
             {
-                Vector3 offset_v = target_object.target.transform.position - transform.position;
-                speed.direction = offset_v;
+                Vector3 offset = target_object.target.transform.position - transform.position;
+                speed.direction = offset;
                 speed.direction.Normalize();
             }
-        }
-        else
-        {
-            Vector3 offset = target_object.target.transform.position - transform.position;
-            speed.direction = offset;
-            speed.direction.Normalize();
         }
     }
 

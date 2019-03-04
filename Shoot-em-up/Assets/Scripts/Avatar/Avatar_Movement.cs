@@ -48,4 +48,6 @@ public class Avatar_Movement : MonoBehaviour {
         transform.rotation = Quaternion.AngleAxis(angle * Mathf.Rad2Deg, new Vector3(0, 0, 1));
     }
 
+
+
 }

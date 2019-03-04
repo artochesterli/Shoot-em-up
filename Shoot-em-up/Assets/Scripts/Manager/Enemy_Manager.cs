@@ -19,6 +19,7 @@ public class Enemy_Manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        EventManager.instance.AddHandler<GameStateChanged>(OnGameStateChanged);
         EnemyManager = gameObject;
         Enemy_name_list.Add("enemy1");
         Enemy_name_list.Add("enemy2");
@@ -31,6 +32,11 @@ public class Enemy_Manager : MonoBehaviour
         StartCoroutine(Generate_Enemy());
     }
 
+
+    private void OnDestroy()
+    {
+        EventManager.instance.RemoveHandler<GameStateChanged>(OnGameStateChanged);
+    }
     // Update is called once per frame
     void Update()
     {
@@ -44,8 +50,9 @@ public class Enemy_Manager : MonoBehaviour
         {
             if (Enemy_list.Count == 0)
             {
-                Generate_Enemy_Wave();
+                
                 Interval_time_count = 0;
+                Generate_Enemy_Wave();
             }
             if (Interval_time_count > Wave_Interval)
             {
@@ -78,16 +85,19 @@ public class Enemy_Manager : MonoBehaviour
 
     private void Generate_Enemy_Wave()
     {
-        for(int i = 0; i < Enemy_border_count.Count; i++)
+        if (GameStateManager.CurrentState == GameState.Playing)
         {
-            Enemy_border_count[i] = 0;
-        }
-        int enemy_number = UnityEngine.Random.Range(Wave_Enemy_Number_Low, Wave_Enemy_Number_High + 1);
-        for(int i = 0; i < enemy_number; i++)
-        {
-            Vector3 pos = Calculate_next_pos();
-            string name = Enemy_name_list[UnityEngine.Random.Range(0, Enemy_name_list.Count)];
-            Create_Enemy(name, pos);
+            for (int i = 0; i < Enemy_border_count.Count; i++)
+            {
+                Enemy_border_count[i] = 0;
+            }
+            int enemy_number = UnityEngine.Random.Range(Wave_Enemy_Number_Low, Wave_Enemy_Number_High + 1);
+            for (int i = 0; i < enemy_number; i++)
+            {
+                Vector3 pos = Calculate_next_pos();
+                string name = Enemy_name_list[UnityEngine.Random.Range(0, Enemy_name_list.Count)];
+                Create_Enemy(name, pos);
+            }
         }
     }
 
@@ -140,4 +150,14 @@ public class Enemy_Manager : MonoBehaviour
         return min_border[index];
     }
 
+    private void OnGameStateChanged(GameStateChanged change)
+    {
+        if (change.State == GameState.Playing)
+        {
+            for(int i = 0; i < Enemy_list.Count; i++)
+            {
+                Destroy(Enemy_list[i]);
+            }
+        }
+    }
 }
