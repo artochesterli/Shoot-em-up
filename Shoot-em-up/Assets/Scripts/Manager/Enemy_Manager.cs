@@ -20,6 +20,7 @@ public class Enemy_Manager : MonoBehaviour
     void Start()
     {
         EventManager.instance.AddHandler<GameStateChanged>(OnGameStateChanged);
+        EventManager.instance.AddHandler<EnemyGenerated>(OnEnemyGenerated);
         EnemyManager = gameObject;
         Enemy_name_list.Add("enemy1");
         Enemy_name_list.Add("enemy2");
@@ -36,6 +37,7 @@ public class Enemy_Manager : MonoBehaviour
     private void OnDestroy()
     {
         EventManager.instance.RemoveHandler<GameStateChanged>(OnGameStateChanged);
+        EventManager.instance.RemoveHandler<EnemyGenerated>(OnEnemyGenerated);
     }
     // Update is called once per frame
     void Update()
@@ -77,8 +79,7 @@ public class Enemy_Manager : MonoBehaviour
     private void Create_Enemy(string name,Vector3 pos)
     {
         GameObject enemy= (GameObject)Instantiate(Resources.Load("Prefabs/" + name), pos, new Quaternion(0, 0, 0, 0));
-        Enemy_list.Add(enemy);
-        enemy.GetComponent<Enemy>().index = Enemy_list.Count - 1;
+        EventManager.instance.Fire(new EnemyGenerated(enemy));
     }
 
 
@@ -159,5 +160,11 @@ public class Enemy_Manager : MonoBehaviour
                 Destroy(Enemy_list[i]);
             }
         }
+    }
+
+    private void OnEnemyGenerated(EnemyGenerated e)
+    {
+        Enemy_list.Add(e.Enemy);
+        e.Enemy.GetComponent<Enemy>().index = Enemy_list.Count - 1;
     }
 }

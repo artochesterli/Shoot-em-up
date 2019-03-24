@@ -22,3 +22,11 @@ public class GameStateChanged : Event
     }
 }
 
+public class EnemyGenerated : Event
+{
+    public GameObject Enemy;
+    public EnemyGenerated(GameObject e)
+    {
+        Enemy = e;
+    }
+}

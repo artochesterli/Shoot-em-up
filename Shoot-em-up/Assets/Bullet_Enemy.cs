@@ -19,11 +19,11 @@ public class Bullet_Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject ob = collision.GetComponent<Collider2D>().gameObject;
-        if (ob.CompareTag("Player"))
+        /*if (ob.CompareTag("Player"))
         {
             GameStateManager.ChangeGameState(GameState.Over);
             Destroy(ob);
             Destroy(gameObject);
-        }
+        }*/
     }
 }

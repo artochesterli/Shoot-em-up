@@ -22,17 +22,18 @@ public class Enemy : MonoBehaviour
     {
         if (collision.GetComponent<Collider2D>().gameObject.CompareTag("Bullet_Avatar"))
         {
+            Destroy(collision.GetComponent<Collider2D>().gameObject);
             EventManager.instance.Fire(new EnemyDied(score));
             Enemy_Manager.EnemyManager.GetComponent<Enemy_Manager>().Destroy_Enemy(index);
 
         }
 
         GameObject ob = collision.GetComponent<Collider2D>().gameObject;
-        if (ob.CompareTag("Player"))
+        /*if (ob.CompareTag("Player"))
         {
             GameStateManager.ChangeGameState(GameState.Over);
             Destroy(ob);
             Destroy(gameObject);
-        }
+        }*/
     }
 }
