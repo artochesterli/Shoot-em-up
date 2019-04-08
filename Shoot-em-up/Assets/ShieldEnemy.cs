@@ -28,7 +28,13 @@ public class ShieldEnemy : MonoBehaviour
         Btree = new Tree<ShieldEnemy>(new Selector<ShieldEnemy>(
             new Sequence<ShieldEnemy>(
                 new IsInDetectRange(),
-                new Attack()
+                new Not<ShieldEnemy>
+                (new Sequence<ShieldEnemy>(
+                    new IsInRetreatRange(),
+                    new Retreat()
+                    )),
+                
+                new March()
             ),
             new Idle()
 
@@ -51,18 +57,6 @@ public class ShieldEnemy : MonoBehaviour
         Btree2.Update(this);
     }
 
-    private void Move()
-    {
-        if((transform.position - Player.transform.position).magnitude <= CloseDistance)
-        {
-            MoveAwayPLayer();
-        }
-        else
-        {
-            MoveTowardsPlayer();
-        }
-    }
-
     private void MoveTowardsPlayer()
     {
         Vector3 direction = (Player.transform.position - transform.position).normalized;
@@ -75,13 +69,29 @@ public class ShieldEnemy : MonoBehaviour
         transform.position += direction * speed * Time.deltaTime;
     }
 
-    private class Attack : Node<ShieldEnemy>
+    private class Retreat : Node<ShieldEnemy>
     {
         public override bool Update(ShieldEnemy enemy)
         {
-            enemy.Move();
-            enemy.GetComponent<Emit_Bullet>().enabled = true;
+            enemy.MoveAwayPLayer();
             return true;
+        }
+    }
+
+    private class March : Node<ShieldEnemy>
+    {
+        public override bool Update(ShieldEnemy enemy)
+        {
+            enemy.MoveTowardsPlayer();
+            return true;
+        }
+    }
+
+    private class IsInRetreatRange : Node<ShieldEnemy>
+    {
+        public override bool Update(ShieldEnemy enemy)
+        {
+            return (enemy.transform.position - enemy.Player.transform.position).magnitude <= CloseDistance;
         }
     }
 
