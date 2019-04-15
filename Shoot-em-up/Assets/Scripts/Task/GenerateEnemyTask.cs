@@ -33,7 +33,8 @@ public class GenerateEnemyTask : Task
             for (int i = 0; i < number; i++)
             {
                 GameObject enemy= (GameObject)GameObject.Instantiate(Resources.Load("Prefabs/enemy" + level.ToString()), ob.transform.position, new Quaternion(0, 0, 0, 0));
-                EventManager.instance.Fire(new EnemyGenerated(enemy));
+                Service.GameEventManager.Fire(new EnemyGenerated(enemy));
+                //EventManager.instance.Fire(new EnemyGenerated(enemy));
             }
         }
     }

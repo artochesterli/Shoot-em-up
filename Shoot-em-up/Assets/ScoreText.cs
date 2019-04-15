@@ -9,14 +9,20 @@ public class ScoreText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventManager.instance.AddHandler<EnemyDied>(OnEnemyDied);
-        EventManager.instance.AddHandler<GameStateChanged>(OnGameStateChanged);
+        Service.GameEventManager.AddHandler<EnemyDied>(OnEnemyDied);
+        Service.GameEventManager.AddHandler<GameStateChanged>(OnGameStateChanged);
+
+        //EventManager.instance.AddHandler<EnemyDied>(OnEnemyDied);
+        //EventManager.instance.AddHandler<GameStateChanged>(OnGameStateChanged);
     }
 
     private void OnDestroy()
     {
-        EventManager.instance.RemoveHandler<EnemyDied>(OnEnemyDied);
-        EventManager.instance.RemoveHandler<GameStateChanged>(OnGameStateChanged);
+        Service.GameEventManager.RemoveHandler<EnemyDied>(OnEnemyDied);
+        Service.GameEventManager.RemoveHandler<GameStateChanged>(OnGameStateChanged);
+
+        //EventManager.instance.RemoveHandler<EnemyDied>(OnEnemyDied);
+        //EventManager.instance.RemoveHandler<GameStateChanged>(OnGameStateChanged);
     }
 
     // Update is called once per frame
@@ -32,7 +38,7 @@ public class ScoreText : MonoBehaviour
 
     private void OnEnemyDied(EnemyDied e)
     {
-        if (GameStateManager.CurrentState == GameState.Playing)
+        if (Service.StateManager.CurrentState == GameState.Playing)
         {
             score += e.EnemyValue;
         }

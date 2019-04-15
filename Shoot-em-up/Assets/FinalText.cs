@@ -9,12 +9,14 @@ public class FinalText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventManager.instance.AddHandler<GameStateChanged>(OnGameStateChanged);
+        Service.GameEventManager.AddHandler<GameStateChanged>(OnGameStateChanged);
+        //EventManager.instance.AddHandler<GameStateChanged>(OnGameStateChanged);
     }
 
     private void OnDestroy()
     {
-        EventManager.instance.RemoveHandler<GameStateChanged>(OnGameStateChanged);
+        Service.GameEventManager.RemoveHandler<GameStateChanged>(OnGameStateChanged);
+        //EventManager.instance.RemoveHandler<GameStateChanged>(OnGameStateChanged);
     }
 
     // Update is called once per frame

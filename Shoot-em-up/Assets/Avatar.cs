@@ -26,7 +26,8 @@ public class Avatar : MonoBehaviour
         public override void Init()
         {
             EnemyKillTime = new List<float>();
-            EventManager.instance.AddHandler<EnemyDied>(OnEnemyDied);
+            Service.GameEventManager.AddHandler<EnemyDied>(OnEnemyDied);
+            //EventManager.instance.AddHandler<EnemyDied>(OnEnemyDied);
         }
 
         public override void OnEnter()
@@ -35,7 +36,8 @@ public class Avatar : MonoBehaviour
             EnemyKillTime = new List<float>();
             Context.gameObject.GetComponent<Avatar_Shoot>().bullet_interval = 0.1f;
             Context.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
-            EventManager.instance.AddHandler<EnemyDied>(OnEnemyDied);
+            Service.GameEventManager.AddHandler<EnemyDied>(OnEnemyDied);
+            //EventManager.instance.AddHandler<EnemyDied>(OnEnemyDied);
         }
 
         public override void Update()
@@ -64,13 +66,15 @@ public class Avatar : MonoBehaviour
         public override void OnExit()
         {
             EnemyKillTime.Clear();
-            EventManager.instance.RemoveHandler<EnemyDied>(OnEnemyDied);
+            Service.GameEventManager.RemoveHandler<EnemyDied>(OnEnemyDied);
+            //EventManager.instance.RemoveHandler<EnemyDied>(OnEnemyDied);
         }
 
         public override void CleanUp()
         {
             EnemyKillTime.Clear();
-            EventManager.instance.RemoveHandler<EnemyDied>(OnEnemyDied);
+            Service.GameEventManager.RemoveHandler<EnemyDied>(OnEnemyDied);
+            //EventManager.instance.RemoveHandler<EnemyDied>(OnEnemyDied);
         }
 
         private void OnEnemyDied(EnemyDied e)

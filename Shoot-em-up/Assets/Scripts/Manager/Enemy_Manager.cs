@@ -19,8 +19,11 @@ public class Enemy_Manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventManager.instance.AddHandler<GameStateChanged>(OnGameStateChanged);
-        EventManager.instance.AddHandler<EnemyGenerated>(OnEnemyGenerated);
+        Service.GameEventManager.AddHandler<GameStateChanged>(OnGameStateChanged);
+        Service.GameEventManager.AddHandler<EnemyGenerated>(OnEnemyGenerated);
+
+        //EventManager.instance.AddHandler<GameStateChanged>(OnGameStateChanged);
+        //EventManager.instance.AddHandler<EnemyGenerated>(OnEnemyGenerated);
         EnemyManager = gameObject;
         Enemy_name_list.Add("enemy1");
         Enemy_name_list.Add("enemy2");
@@ -36,8 +39,11 @@ public class Enemy_Manager : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventManager.instance.RemoveHandler<GameStateChanged>(OnGameStateChanged);
-        EventManager.instance.RemoveHandler<EnemyGenerated>(OnEnemyGenerated);
+        Service.GameEventManager.RemoveHandler<GameStateChanged>(OnGameStateChanged);
+        Service.GameEventManager.RemoveHandler<EnemyGenerated>(OnEnemyGenerated);
+
+        //EventManager.instance.RemoveHandler<GameStateChanged>(OnGameStateChanged);
+        //EventManager.instance.RemoveHandler<EnemyGenerated>(OnEnemyGenerated);
     }
     // Update is called once per frame
     void Update()
@@ -79,14 +85,15 @@ public class Enemy_Manager : MonoBehaviour
     private void Create_Enemy(string name,Vector3 pos)
     {
         GameObject enemy= (GameObject)Instantiate(Resources.Load("Prefabs/" + name), pos, new Quaternion(0, 0, 0, 0));
-        EventManager.instance.Fire(new EnemyGenerated(enemy));
+        Service.GameEventManager.Fire(new EnemyGenerated(enemy));
+        //EventManager.instance.Fire(new EnemyGenerated(enemy));
     }
 
 
 
     private void Generate_Enemy_Wave()
     {
-        if (GameStateManager.CurrentState == GameState.Playing)
+        if (Service.StateManager.CurrentState == GameState.Playing)
         {
             for (int i = 0; i < Enemy_border_count.Count; i++)
             {

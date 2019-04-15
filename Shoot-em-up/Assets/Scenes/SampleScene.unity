@@ -806,8 +806,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2b903589c75b2642b3391cee60de036, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Wave_Enemy_Number_Low: 0
-  Wave_Enemy_Number_High: 0
+  Wave_Enemy_Number_Low: 5
+  Wave_Enemy_Number_High: 8
   Wave_Interval: 5
 --- !u!4 &1849671678
 Transform:
@@ -832,7 +832,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1849671676}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 523d305b53e50704e953571a1e845899, type: 3}
+  m_Script: {fileID: 11500000, guid: befa3ad2b6bfadc42ac168d47a981623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2062647120
@@ -1153,7 +1153,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &8985538039763671651
 MonoBehaviour:
   m_ObjectHideFlags: 0

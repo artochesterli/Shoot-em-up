@@ -10,7 +10,7 @@ public class EventManager
     private readonly Dictionary<Type, EventDelegate> AllDelegete = new Dictionary<Type, EventDelegate>();
     private readonly Dictionary<Delegate, EventDelegate> DelegateLookup = new Dictionary<Delegate, EventDelegate>();
 
-    public static EventManager instance = new EventManager();
+    //public static EventManager instance = new EventManager();
 
     public void AddHandler<T>(EventDelegate<T> del) where T : Event
     {

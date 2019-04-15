@@ -27,13 +27,11 @@ public class ShieldEnemy : MonoBehaviour
         Player = GameObject.Find("Avatar").gameObject;
         Btree = new Tree<ShieldEnemy>(new Selector<ShieldEnemy>(
             new Sequence<ShieldEnemy>(
+                new IsInRetreatRange(),
+                new Retreat()
+            ),
+            new Sequence<ShieldEnemy>(
                 new IsInDetectRange(),
-                new Not<ShieldEnemy>
-                (new Sequence<ShieldEnemy>(
-                    new IsInRetreatRange(),
-                    new Retreat()
-                    )),
-                
                 new March()
             ),
             new Idle()
